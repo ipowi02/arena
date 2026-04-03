@@ -63,7 +63,7 @@ int arena_free_wrapper(void *a, void *ctx) {
 }
 void *arena_alloc_wrapper(size_t size, void *ctx) {
      arena_aligned_ctx_t *c = ctx;
-     return arena_alloc_aligned(c->arena, size, c->alignment);
+     return arena_alloc_aligned(c->a, size, c->alignment);
 }
 
 #endif // ARENA_IMPLEMENTATION
