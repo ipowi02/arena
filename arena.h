@@ -1,5 +1,5 @@
 /*
- * arena.h - 1.0.1 - Public Domain
+ * arena.h - 1.0.2 - Public Domain
  Non-owning arena allocator implementation in C.
  
  */
@@ -57,9 +57,18 @@ int arena_drop(arena_t *a) {
      return 0;
 }
 
+int arena_free_wrapper(void *a, void *ctx) {
+     (void)ctx;
+     return arena_drop(a);
+}
+void *arena_alloc_wrapper(size_t size, void *ctx) {
+     arena_aligned_ctx_t *c = ctx;
+     return arena_alloc_aligned(c->arena, size, c->alignment);
+}
 
 #endif // ARENA_IMPLEMENTATION
 #endif // ARENA_H
 /*
  * 1.0.1 - Added struct "arena_alignment_ctx" so arena_alloc_aligned can be used in an allocator interface.
+ * 1.0.2 - Added wrapper functions for allocator interfaces.
  */
